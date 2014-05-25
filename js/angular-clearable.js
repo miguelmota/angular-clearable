@@ -25,7 +25,7 @@
  */
 
 angular.module('xngClearable', []).
-    directive('xngClearable', function() {
+    directive('xngClearable', function($window) {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -39,10 +39,15 @@ angular.module('xngClearable', []).
 
                     var btn = tElement.next();
 
-                    btn.css('font-size', Math.round(tElement.prop('offsetHeight')*0.8) + 'px');
-                    btn.css('top', '50%');
-                    btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*1.3) + 'px');
-                    btn.css('margin', [-(btn.prop('offsetHeight') / 2) + 'px',0,0,0].join(' '));
+                    function positionButton() {
+                        btn.css('font-size', Math.round(tElement.prop('offsetHeight')*0.8) + 'px');
+                        btn.css('top', '50%');
+                        btn.css('left', Math.round(tElement.prop('offsetWidth') - btn.prop('offsetWidth')*1.3) + 'px');
+                        btn.css('margin', [-(btn.prop('offsetHeight') / 2) + 'px',0,0,0].join(' '));
+                    }
+
+                    angular.element($window).bind('resize', positionButton);
+                    positionButton();
 
                     return function(scope, iElement, iAttrs) {
                         if (iElement[0].tagName == 'DIV') {
