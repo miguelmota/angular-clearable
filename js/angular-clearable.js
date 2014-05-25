@@ -29,8 +29,8 @@ angular.module('xngClearable', []).
         return {
             restrict: 'A',
             require: 'ngModel',
-            compile: function(tElement) {
-                var clearClass = 'clear_button',
+            compile: function(tElement, tAttrs) {
+                var clearClass = tAttrs.clearableClass || 'clear_button',
                     divClass = clearClass + '_div';
 
                 if (!tElement.parent().hasClass(divClass)) {
